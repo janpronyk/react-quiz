@@ -1,12 +1,14 @@
-import { FC } from 'react'
+import { FC, MouseEvent } from 'react'
+
+import { AnswerObject } from '../App'
 
 // https://opentdb.com/api.php?amount=10&type=multiple
 
 type Props = {
     question: string;
     answers: string[];
-    callback: any;
-    userAnswer: any;
+    callback: (e: MouseEvent<HTMLButtonElement>) => void;
+    userAnswer: AnswerObject | undefined;
     questionNumber: number;
     totalQuestions: number;
 }
@@ -26,7 +28,8 @@ const QuestionCard: FC<Props> =  ({
             <div>
                 {answers.map((answer, index) => (
                     <div key={index}>
-                        <button disabled={userAnswer}
+                        <button 
+                            disabled={!!userAnswer}
                             value={answer}
                             onClick={callback}>
                             <span dangerouslySetInnerHTML={{ __html: answer}}></span>
