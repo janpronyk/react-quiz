@@ -1,11 +1,10 @@
 import { MouseEvent, useState } from 'react';
-import './App.css';
 
 import { fetchQuizQuestions } from './API'
 import QuestionCard from './components/question-card.component'
 
-// Types
 import { Difficulty, QuestionState } from './API'
+import { GlobalStyles, Wrapper } from './App.styles'
 
 const TOTAL_QUESTIONS = 10
 
@@ -61,7 +60,7 @@ const  App = () => {
 
   const nextQuestion = () => {
     const nextQuestion = number + 1
-    if(nextQuestion === TOTAL_QUESTIONS) {
+    if(nextQuestion === TOTAL_QUESTIONS - 1) {
       setGameOver(true)
     } else {
       setNumber(nextQuestion)
@@ -69,47 +68,56 @@ const  App = () => {
   }
   
   return (
-    <div className="App">
-      <h1>React Quiz</h1>
+    <>
+      <GlobalStyles />
+      <Wrapper>
+        <h1>React Quiz</h1>
 
-      {
-        gameOver || userAnswers.length === TOTAL_QUESTIONS ? 
-        (<button className='start' onClick={startTrivia}>Start</button> ) 
+        {
+          gameOver || userAnswers.length === TOTAL_QUESTIONS ? 
+          (<button className='start' onClick={startTrivia}>Start</button> ) 
+          
+          : null
+        }
+
+        {
+        !loading && !gameOver ? <p className="score">Score: {score}</p>  : null
+        }
+
+        {
+          loading && <p>Loading Questions...</p>
+        }
         
-        : null
-      }
+        {
 
-      {
-       !gameOver ? <p className="score">Score:</p> : null
-      }
+          
+        !loading && !gameOver && (
+            <QuestionCard
+              questionNumber={number + 1}
+              totalQuestions={TOTAL_QUESTIONS}
+              question={questions[number].question}
+              answers={questions[number].answers}
+              userAnswer={userAnswers ? userAnswers[number] : undefined}
+              callback={checkAnswer}
+              />
+          )
+        }
 
-      {
-        loading && <p>Loading Questions...</p>
-      }
-      
-      {
-       !loading && !gameOver && (
-          <QuestionCard
-            questionNumber={number + 1}
-            totalQuestions={TOTAL_QUESTIONS}
-            question={questions[number].question}
-            answers={questions[number].answers}
-            userAnswer={userAnswers ? userAnswers[number] : undefined}
-            callback={checkAnswer}
-            />
-        )
-      }
+        {
+          !gameOver && !loading ?
+          ( <button className='next'
+              disabled={userAnswers.length !== number + 1}
+              onClick={nextQuestion}>Next Question</button> )
+          : null
+        }
+        
+        
 
-      {
-        !gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ?
-        ( <button className='next' onClick={nextQuestion}>Next Question</button> )
-        : null
-      }
-      
-      
-
-    </div>
-
+      </Wrapper>
+      <p className='copyrights'>
+        Background Image: <a href="http://www.freepik.com">Designed by Freepik</a>
+      </p>
+    </>
   );
 }
 

@@ -1,8 +1,8 @@
 import { FC, MouseEvent } from 'react'
 
 import { AnswerObject } from '../App'
+import { QuestionWrapper, ButtonWrapper } from './question-card.styles'
 
-// https://opentdb.com/api.php?amount=10&type=multiple
 
 type Props = {
     question: string;
@@ -20,24 +20,27 @@ const QuestionCard: FC<Props> =  ({
     userAnswer, 
     questionNumber, 
     totalQuestions}) => (
-        <div>
+        <QuestionWrapper>
             <p className="number">
                 Question: {questionNumber} / {totalQuestions}
             </p>
             <p dangerouslySetInnerHTML={{__html: question}}></p>
             <div>
                 {answers.map((answer, index) => (
-                    <div key={index}>
+                    <ButtonWrapper 
+                        key={index}
+                        correct={userAnswer?.correctAnswer === answer}
+                        userClicked={userAnswer?.answer === answer}>
                         <button 
                             disabled={!!userAnswer}
                             value={answer}
                             onClick={callback}>
                             <span dangerouslySetInnerHTML={{ __html: answer}}></span>
                         </button>
-                    </div>
+                    </ButtonWrapper>
                 ))}
             </div> 
-        </div>
+        </QuestionWrapper>
     )
 
 export default QuestionCard
