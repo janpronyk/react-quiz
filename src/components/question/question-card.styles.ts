@@ -3,14 +3,17 @@ import styled from 'styled-components'
 
 export const QuestionWrapper = styled.div`
 
-    width: 80%;
-    max-width: 90%;
+    min-width: 80%;
     background: #ebfeff;
     border-radius: 10px;
     border: 2px solid #0085a3;
     padding: 20px;
     box-shadow: 0px 5px 10px rgb(0 0 0 / 25%);
     text-align: center;
+
+    @media screen and (max-width: 680px) {
+        width: 100%;
+    }
 
     p {
         font-size: 1rem;

@@ -1,6 +1,6 @@
 import { FC, MouseEvent } from 'react'
 
-import { AnswerObject } from '../App'
+import { AnswerObject } from '../../App'
 import { QuestionWrapper, ButtonWrapper } from './question-card.styles'
 
 

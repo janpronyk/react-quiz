@@ -1,7 +1,7 @@
 import { MouseEvent, useState } from 'react';
 
 import { fetchQuizQuestions } from './API'
-import QuestionCard from './components/question-card.component'
+import QuestionCard from './components/question/question-card.component'
 
 import { Difficulty, QuestionState } from './API'
 import { GlobalStyles, Wrapper } from './App.styles'
@@ -22,6 +22,7 @@ const  App = () => {
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(true)
+  const [initialLoad, setInitialLoad] = useState(true)
 
   console.log(questions)
 
@@ -59,6 +60,7 @@ const  App = () => {
   }
 
   const nextQuestion = () => {
+    setInitialLoad(false)
     const nextQuestion = number + 1
     if(nextQuestion === TOTAL_QUESTIONS - 1) {
       setGameOver(true)
@@ -72,17 +74,22 @@ const  App = () => {
       <GlobalStyles />
       <Wrapper>
         <h1>React Quiz</h1>
-
         {
-          gameOver || userAnswers.length === TOTAL_QUESTIONS ? 
-          (<button className='start' onClick={startTrivia}>Start</button> ) 
-          
+        !loading && !initialLoad ? 
+          <p className="score">Score: {score}</p>  
           : null
         }
 
         {
-        !loading && !gameOver ? <p className="score">Score: {score}</p>  : null
+          gameOver || userAnswers.length === TOTAL_QUESTIONS ? 
+          (<button className='start' onClick={startTrivia}>
+            { initialLoad ? 'Start' : 'Play Again'}
+          </button> ) 
+          
+          : null
         }
+
+       
 
         {
           loading && <p>Loading Questions...</p>

@@ -19,7 +19,7 @@ export const GlobalStyles = createGlobalStyle`
         text-align: center;
         justify-content: center;
         align-items: center;
-        background: rgb(69, 56, 97);
+        background: rgb(45, 36, 63);
     }
 
     * {
@@ -47,7 +47,7 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60vw;
+    min-width: 60vw;
     border-radius: 20px;
     max-width: 80vw;
     padding: 30px;
@@ -57,6 +57,11 @@ export const Wrapper = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.75);
+
+    @media screen and (max-width: 680px) {
+        max-width: 100vw;
+        padding: 10px;
+    }
 
     > p {
         color: whitesmoke;
@@ -82,6 +87,10 @@ export const Wrapper = styled.div`
         font-weight: 400;
         text-align: center;
         margin: 20px;
+
+        @media screen and (max-width: 680px) {
+            font-size: 50px;
+        }
     }
 
     .start, .next {
