@@ -6,6 +6,8 @@ import QuestionCard from './components/question/question-card.component'
 import { Difficulty, QuestionState } from './API'
 import { GlobalStyles, Wrapper } from './App.styles'
 
+import SpikeDemoInfo from './components/spike-demo-info/spike-demo-info.component'
+
 const TOTAL_QUESTIONS = 10
 
 export type AnswerObject = {
@@ -73,6 +75,8 @@ const  App = () => {
     <>
       <GlobalStyles />
       <Wrapper>
+
+        <SpikeDemoInfo />
         <h1>React Quiz</h1>
         {
         !loading && !initialLoad ? 
